@@ -1,0 +1,27 @@
+administer user badge entities:
+  title: 'Administer User Badge Entitie'
+  description: 'Allows a user to administer user badge entities'
+view user badge entities:
+  title: 'View User Badge Entity'
+  description: 'Allows a user to view the user badge entities.'
+create user badge entities:
+  title: 'Create User Badge Entities'
+  description: 'Allows a user to create user badge entities.'
+edit user badge entities:
+  title: 'Edit User Badge Entities'
+  description: 'Allows a user to edit user badge entities.'
+delete user badge entities:
+  title: 'Delete User Badge Entities'
+  description: 'Allows a user to delete user badge entities.'
+use user badge bulk operations:
+  title: 'Do bulk operations on User Badge entities'
+  description: 'Allows a user to do bulk operations.'
+manage badges:
+  title: 'Manage badges'
+  description: 'Access the User Badges administration pages.'
+change badge assignments:
+  title: 'Change badge assignments'
+  description: 'Access the "Badges" tab in user profiles.'
+change own badge assignments:
+  title: 'Change own badge assignments'
+  description: 'Access the "Badges" tab in their own user profile.'
