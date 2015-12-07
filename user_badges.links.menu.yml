@@ -1,6 +1,0 @@
-user_badges.view_entity:
-  route_name: user_badges.view_entity
-  title: 'User Badge'
-user_badges.bulk_delete:
-  route_name: user_badges.bulk_delete
-  title: 'Bulk Delete User Badges'

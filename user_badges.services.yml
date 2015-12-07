@@ -1,6 +1,0 @@
-services:
-  init_subscriber:
-    class: Drupal\user_badges\EventSubscriber\InitSubscriber
-    tags:
-      -
-        name: event_subscriber
