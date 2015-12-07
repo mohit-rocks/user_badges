@@ -1,0 +1,13 @@
+# User Badge menu items definition
+entity.user_badge.collection:
+  title: 'User Badge list'
+  route_name: entity.user_badge.collection
+  description: 'List User Badge entities'
+  parent: system.admin_structure
+   weight: 100
+
+user_badge.admin.structure.settings:
+  title: User Badge settings
+  description: 'Configure User Badge entities'
+  route_name: user_badge.settings
+  parent: system.admin_structure

@@ -1,0 +1,61 @@
+
+# UserBadge routing definition
+entity.user_badge.canonical:
+  path: '/admin/structure/user_badge/{user_badge}'
+  defaults:
+    _entity_view: 'user_badge'
+    _title: 'User Badge'
+  requirements:
+    _entity_access: 'user_badge.view'
+  options:
+    _admin_route: TRUE
+
+entity.user_badge.collection:
+  path: '/admin/structure/user_badge'
+  defaults:
+    _entity_list: 'user_badge'
+    _title: 'User Badge list'
+  requirements:
+    _permission: 'view user badge entities'
+  options:
+    _admin_route: TRUE
+
+entity.user_badge.add_form:
+  path: '/admin/structure/user_badge/add'
+  defaults:
+    _entity_form: user_badge.add
+    _title: 'Add User Badge'
+  requirements:
+    _permission: 'add user badge entities'
+  options:
+    _admin_route: TRUE
+
+entity.user_badge.edit_form:
+  path: '/admin/structure/user_badge/{user_badge}/edit'
+  defaults:
+    _entity_form: user_badge.edit
+    _title: 'Edit User Badge'
+  requirements:
+    _permission: 'edit user badge entities'
+  options:
+    _admin_route: TRUE
+
+entity.user_badge.delete_form:
+  path: '/admin/structure/user_badge/{user_badge}/delete'
+  defaults:
+    _entity_form: user_badge.delete
+    _title: 'Delete User Badge'
+  requirements:
+    _permission: 'delete user badge entities'
+  options:
+    _admin_route: TRUE
+
+user_badge.settings:
+  path: 'admin/structure/user_badge'
+  defaults:
+   _form: '\Drupal\user_badges\Entity\Form\UserBadgeSettingsForm'
+   _title: 'User Badge settings'
+  requirements:
+    _permission: 'administer user badge entities'
+  options:
+    _admin_route: TRUE
