@@ -11,7 +11,7 @@ use Drupal\views\EntityViewsData;
 use Drupal\views\EntityViewsDataInterface;
 
 /**
- * Provides Views data for User Badge entities.
+ * Provides Views data for User badge entities.
  */
 class UserBadgeViewsData extends EntityViewsData implements EntityViewsDataInterface {
   /**
@@ -22,8 +22,8 @@ class UserBadgeViewsData extends EntityViewsData implements EntityViewsDataInter
 
     $data['user_badge']['table']['base'] = array(
       'field' => 'id',
-      'title' => $this->t('User Badge'),
-      'help' => $this->t('The User Badge ID.'),
+      'title' => $this->t('User badge'),
+      'help' => $this->t('The User badge ID.'),
     );
 
     return $data;

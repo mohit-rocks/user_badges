@@ -5,14 +5,14 @@
  * Contains \Drupal\user_badges\Entity\Form\UserBadgeForm.
  */
 
-namespace Drupal\user_badges\Form;
+namespace Drupal\user_badges\Entity\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\Language;
 
 /**
- * Form controller for User Badge edit forms.
+ * Form controller for User badge edit forms.
  *
  * @ingroup user_badges
  */
@@ -54,13 +54,13 @@ class UserBadgeForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label User Badge.', [
+        drupal_set_message($this->t('Created the %label User badge.', [
           '%label' => $entity->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label User Badge.', [
+        drupal_set_message($this->t('Saved the %label User badge.', [
           '%label' => $entity->label(),
         ]));
     }

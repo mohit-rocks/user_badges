@@ -13,7 +13,7 @@ use Drupal\Core\Routing\LinkGeneratorTrait;
 use Drupal\Core\Url;
 
 /**
- * Defines a class to build a listing of User Badge entities.
+ * Defines a class to build a listing of User badge entities.
  *
  * @ingroup user_badges
  */
@@ -23,7 +23,7 @@ class UserBadgeListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = $this->t('User Badge ID');
+    $header['id'] = $this->t('User badge ID');
     $header['name'] = $this->t('Name');
     return $header + parent::buildHeader();
   }

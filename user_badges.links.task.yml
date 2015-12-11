@@ -1,8 +1,4 @@
-# User Badge routing definition
-user_badge.settings_tab:
-  route_name: user_badge.settings
-  title: 'Settings'
-  base_route: user_badge.settings
+# User badge routing definition
 entity.user_badge.canonical:
   route_name: entity.user_badge.canonical
   base_route: entity.user_badge.canonical

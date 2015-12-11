@@ -1,13 +1,24 @@
-# User Badge menu items definition
+# User badge type menu items definition
+entity.user_badge_type.collection:
+  title: 'User badge type'
+  route_name: entity.user_badge_type.collection
+  description: 'List User badge type (bundles)'
+  parent: system.admin_structure
+   weight: 99
+
+# User badge menu items definition
 entity.user_badge.collection:
-  title: 'User Badge list'
+  title: 'User badge list'
   route_name: entity.user_badge.collection
-  description: 'List User Badge entities'
+  description: 'List User badge entities'
   parent: system.admin_structure
    weight: 100
 
-user_badge.admin.structure.settings:
-  title: User Badge settings
-  description: 'Configure User Badge entities'
-  route_name: user_badge.settings
+# User badge type menu items definition
+entity.user_badge_type.collection:
+  title: 'User badge type'
+  route_name: entity.user_badge_type.collection
+  description: 'List User badge type (bundles)'
   parent: system.admin_structure
+   weight: 99
+

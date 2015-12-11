@@ -1,15 +1,15 @@
 add user badge entities:
-  title: 'Create new User Badge entities'
+  title: 'Create new User badge entities'
 
 administer user badge entities:
-  title: 'Administer User Badge entities'
-  description: 'Allow to access the administration form to configure User Badge entities.'
+  title: 'Administer User badge entities'
+  description: 'Allow to access the administration form to configure User badge entities.'
 
 delete user badge entities:
-  title: 'Delete User Badge entities'
+  title: 'Delete User badge entities'
 
 edit user badge entities:
-  title: 'Edit User Badge entities'
+  title: 'Edit User badge entities'
 
 view user badge entities:
-  title: 'View User Badge entities'
+  title: 'View User badge entities'

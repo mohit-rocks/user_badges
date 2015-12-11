@@ -13,7 +13,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 
 /**
- * Access controller for the User Badge entity.
+ * Access controller for the User badge entity.
  *
  * @see \Drupal\user_badges\Entity\UserBadge.
  */

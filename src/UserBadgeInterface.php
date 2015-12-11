@@ -13,7 +13,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user\EntityOwnerInterface;
 
 /**
- * Provides an interface for defining User Badge entities.
+ * Provides an interface for defining User badge entities.
  *
  * @ingroup user_badges
  */

@@ -2,33 +2,31 @@
 
 /**
  * @file
- * Contains \Drupal\user_badges\Entity\Form\UserBadgeDeleteForm.
+ * Contains \Drupal\user_badges\Form\UserBadgeTypeDeleteForm.
  */
 
-namespace Drupal\user_badges\Entity\Form;
+namespace Drupal\user_badges\Form;
 
-use Drupal\Core\Entity\ContentEntityConfirmFormBase;
+use Drupal\Core\Entity\EntityConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 /**
- * Provides a form for deleting User badge entities.
- *
- * @ingroup user_badges
+ * Builds the form to delete User badge type entities.
  */
-class UserBadgeDeleteForm extends ContentEntityConfirmFormBase {
+class UserBadgeTypeDeleteForm extends EntityConfirmFormBase {
   /**
    * {@inheritdoc}
    */
   public function getQuestion() {
-    return $this->t('Are you sure you want to delete entity %name?', array('%name' => $this->entity->label()));
+    return $this->t('Are you sure you want to delete %name?', array('%name' => $this->entity->label()));
   }
 
   /**
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return new Url('entity.user_badge.collection');
+    return new Url('entity.user_badge_type.collection');
   }
 
   /**

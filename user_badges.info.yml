@@ -1,6 +1,5 @@
-name: user_badges
+name: User Badges
 type: module
-description: This module provides custom badges functionality for users.
+description: My Awesome Module
 core: 8.x
 package: Other
-features: true
