@@ -1,0 +1,7 @@
+entity.badge.add_form:
+  route_name: entity.badge.add_form
+  title: 'Add Badge'
+  appears_on:
+    - entity.badge.collection
+    - entity.badge.canonical
+

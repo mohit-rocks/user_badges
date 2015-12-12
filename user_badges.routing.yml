@@ -1,0 +1,61 @@
+
+# Badge routing definition
+entity.badge.canonical:
+  path: '/admin/structure/badge/{badge}'
+  defaults:
+    _entity_view: 'badge'
+    _title: 'Badge'
+  requirements:
+    _entity_access: 'badge.view'
+  options:
+    _admin_route: TRUE
+
+entity.badge.collection:
+  path: '/admin/structure/badge'
+  defaults:
+    _entity_list: 'badge'
+    _title: 'Badge list'
+  requirements:
+    _permission: 'view badge entities'
+  options:
+    _admin_route: TRUE
+
+entity.badge.add_form:
+  path: '/admin/structure/badge/add'
+  defaults:
+    _entity_form: badge.add
+    _title: 'Add Badge'
+  requirements:
+    _permission: 'add badge entities'
+  options:
+    _admin_route: TRUE
+
+entity.badge.edit_form:
+  path: '/admin/structure/badge/{badge}/edit'
+  defaults:
+    _entity_form: badge.edit
+    _title: 'Edit Badge'
+  requirements:
+    _permission: 'edit badge entities'
+  options:
+    _admin_route: TRUE
+
+entity.badge.delete_form:
+  path: '/admin/structure/badge/{badge}/delete'
+  defaults:
+    _entity_form: badge.delete
+    _title: 'Delete Badge'
+  requirements:
+    _permission: 'delete badge entities'
+  options:
+    _admin_route: TRUE
+
+badge.settings:
+  path: 'admin/structure/badge'
+  defaults:
+   _form: '\Drupal\user_badges\Entity\Form\BadgeSettingsForm'
+   _title: 'Badge settings'
+  requirements:
+    _permission: 'administer badge entities'
+  options:
+    _admin_route: TRUE

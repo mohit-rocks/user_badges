@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Contains user_badges.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function user_badges_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the user_badges module.
+    case 'help.page.user_badges':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('My Awesome Module') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function user_badges_theme() {
+  $theme = [];
+
+  return $theme;
+}
