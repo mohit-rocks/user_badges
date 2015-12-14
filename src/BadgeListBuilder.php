@@ -25,6 +25,7 @@ class BadgeListBuilder extends EntityListBuilder {
   public function buildHeader() {
     $header['id'] = $this->t('Badge ID');
     $header['name'] = $this->t('Name');
+    $header['badge_image'] = $this->t('Badge Image');
     return $header + parent::buildHeader();
   }
 
@@ -42,6 +43,7 @@ class BadgeListBuilder extends EntityListBuilder {
         )
       )
     );
+    $row['badge_image'] = $entity->field_badge_image->entity->url();
     return $row + parent::buildRow($entity);
   }
 

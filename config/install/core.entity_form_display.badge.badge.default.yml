@@ -1,0 +1,37 @@
+uuid: 7e054217-0dd4-4f41-8d00-fb41f115ea2c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.badge.badge.field_badge_image
+  module:
+    - image
+    - user_badges
+id: badge.badge.default
+targetEntityType: badge
+bundle: badge
+mode: default
+content:
+  field_badge_image:
+    type: image_image
+    weight: 1
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  user_id:
+    type: entity_reference_autocomplete
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }
