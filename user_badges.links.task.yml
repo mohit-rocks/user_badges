@@ -1,4 +1,8 @@
 # Badge routing definition
+badge.listing_tab:
+  route_name: entity.badge.collection
+  title: 'Badges'
+  base_route: entity.badge.collection
 badge.settings_tab:
   route_name: badge.settings
   title: 'Settings'

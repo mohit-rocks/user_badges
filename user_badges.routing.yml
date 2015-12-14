@@ -11,7 +11,7 @@ entity.badge.canonical:
     _admin_route: TRUE
 
 entity.badge.collection:
-  path: '/admin/structure/badge'
+  path: 'admin/badges/list'
   defaults:
     _entity_list: 'badge'
     _title: 'Badge list'

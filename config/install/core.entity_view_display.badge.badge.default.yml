@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.badge.badge.field_badge_image
+  module:
+    - image
+    - user_badges
+id: badge.badge.default
+targetEntityType: badge
+bundle: badge
+mode: default
+content:
+  field_badge_image:
+    type: image
+    weight: 1
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+  name:
+    label: above
+    type: string
+    weight: 0
+    settings:
+      link_to_entity: true
+    third_party_settings: {  }
+hidden:
+  user_id: true
