@@ -103,6 +103,13 @@ class Badge extends ContentEntityBase implements BadgeInterface {
   /**
    * {@inheritdoc}
    */
+  public function getBadageWeight() {
+    return $this->get('weight')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields['id'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('ID'))
@@ -158,6 +165,18 @@ class Badge extends ContentEntityBase implements BadgeInterface {
       ))
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
+
+    $fields['weight'] = BaseFieldDefinition::create('list_integer')
+      ->setLabel(t('Badge Weight'))
+      ->setDescription(t('The weight of badge that allows to display badges as per weight order.'))
+      ->setSetting('unsigned', TRUE)
+      ->setRequired(TRUE)
+      ->setSetting('allowed_values', range(-10, 10))
+      ->setDisplayOptions('form', array(
+        'type' => 'options_select',
+        'weight' => -2,
+      ))
+      ->setDisplayConfigurable('form', TRUE);
 
     $fields['langcode'] = BaseFieldDefinition::create('language')
       ->setLabel(t('Language code'))

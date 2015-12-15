@@ -50,6 +50,7 @@ class BadgeListBuilder extends EntityListBuilder {
       '#title' => $entity->label(),
     );
     $row['badge_image'] = render($image);
+    $row['weight'] = $entity->getBadageWeight();
     return $row + parent::buildRow($entity);
   }
 
