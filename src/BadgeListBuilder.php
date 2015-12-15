@@ -43,7 +43,13 @@ class BadgeListBuilder extends EntityListBuilder {
         )
       )
     );
-    $row['badge_image'] = $entity->field_badge_image->entity->url();
+    $image = array(
+      '#theme' => 'image_style',
+      '#style_name' => 'thumbnail',
+      '#uri' => $entity->field_badge_image->entity->getFileUri(),
+      '#title' => $entity->label(),
+    );
+    $row['badge_image'] = render($image);
     return $row + parent::buildRow($entity);
   }
 
