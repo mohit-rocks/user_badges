@@ -62,12 +62,24 @@ class Badge extends ContentEntityBase implements BadgeInterface {
       'user_id' => \Drupal::currentUser()->id(),
     );
   }
-
   /**
    * {@inheritdoc}
    */
-  public function getCreatedTime() {
-    return $this->get('created')->value;
+  public function getType() {
+    return $this->bundle();
+  }
+  /**
+   * {@inheritdoc}
+   */
+  public function getName() {
+    return $this->get('name')->value;
+  }
+  /**
+   * {@inheritdoc}
+   */
+  public function setName($name) {
+    $this->set('name', $name);
+    return $this;
   }
 
   /**
@@ -103,8 +115,15 @@ class Badge extends ContentEntityBase implements BadgeInterface {
   /**
    * {@inheritdoc}
    */
-  public function getBadageWeight() {
+  public function getBadgeWeight() {
     return $this->get('weight')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setBadgeWeight($weight) {
+    return $this->set('weight', $weight);
   }
 
   /**
@@ -123,28 +142,7 @@ class Badge extends ContentEntityBase implements BadgeInterface {
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
       ->setDescription(t('The user ID of author of the Badge entity.'))
-      ->setRevisionable(TRUE)
-      ->setSetting('target_type', 'user')
-      ->setSetting('handler', 'default')
-      ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
-      ->setTranslatable(TRUE)
-      ->setDisplayOptions('view', array(
-        'label' => 'hidden',
-        'type' => 'author',
-        'weight' => 0,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'entity_reference_autocomplete',
-        'weight' => 5,
-        'settings' => array(
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'autocomplete_type' => 'tags',
-          'placeholder' => '',
-        ),
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+      ->setReadOnly(TRUE);
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Name'))
@@ -181,10 +179,6 @@ class Badge extends ContentEntityBase implements BadgeInterface {
     $fields['langcode'] = BaseFieldDefinition::create('language')
       ->setLabel(t('Language code'))
       ->setDescription(t('The language code for the Badge entity.'));
-
-    $fields['created'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Created'))
-      ->setDescription(t('The time that the entity was created.'));
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
