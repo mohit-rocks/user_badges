@@ -102,22 +102,6 @@ class RoleBadge extends ContentEntityBase implements RoleBadgeInterface {
   /**
    * {@inheritdoc}
    */
-  public function setOwnerId($uid) {
-    $this->set('user_id', $uid);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setOwner(UserInterface $account) {
-    $this->set('user_id', $account->id());
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function isPublished() {
     return (bool) $this->getEntityKey('status');
   }
