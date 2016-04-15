@@ -59,7 +59,6 @@ use Drupal\user\UserInterface;
  * )
  */
 class RoleBadge extends ContentEntityBase implements RoleBadgeInterface {
-  use EntityChangedTrait;
   /**
    * {@inheritdoc}
    */
@@ -98,20 +97,6 @@ class RoleBadge extends ContentEntityBase implements RoleBadgeInterface {
   public function setCreatedTime($timestamp) {
     $this->set('created', $timestamp);
     return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getOwner() {
-    return $this->get('user_id')->entity;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getOwnerId() {
-    return $this->get('user_id')->target_id;
   }
 
   /**

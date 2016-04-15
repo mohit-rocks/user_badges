@@ -16,7 +16,7 @@ use Drupal\user\EntityOwnerInterface;
  *
  * @ingroup user_badges
  */
-interface RoleBadgeInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
+interface RoleBadgeInterface extends ContentEntityInterface {
   // Add get/set methods for your configuration properties here.
   /**
    * Gets the Role badge name.
