@@ -5,3 +5,14 @@ entity.badge.add_form:
     - entity.badge.collection
     - entity.badge.canonical
 
+entity.badge_type.add_form:
+  route_name: 'entity.badge_type.add_form'
+  title: 'Add Badge type'
+  appears_on:
+    - entity.badge_type.collection
+
+entity.role_badge.add_form:
+  route_name: entity.role_badge.add_form
+  title: 'Add Role badge'
+  appears_on:
+    - entity.role_badge.collection

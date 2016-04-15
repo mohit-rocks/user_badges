@@ -34,7 +34,6 @@ use Drupal\user\UserInterface;
  *       "edit" = "Drupal\user_badges\Entity\Form\BadgeForm",
  *       "delete" = "Drupal\user_badges\Entity\Form\BadgeDeleteForm",
  *     },
- *     "access" = "Drupal\user_badges\BadgeAccessControlHandler",
  *   },
  *   base_table = "badge",
  *   admin_permission = "administer Badge entity",

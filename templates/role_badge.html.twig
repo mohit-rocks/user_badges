@@ -1,0 +1,22 @@
+{#
+/**
+ * @file role_badge.html.twig
+ * Default theme implementation to present Role badge data.
+ *
+ * This template is used when viewing Role badge pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_role_badge()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('role_badge') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>
