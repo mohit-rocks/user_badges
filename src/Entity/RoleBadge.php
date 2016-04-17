@@ -42,7 +42,6 @@ use Drupal\user\UserInterface;
  *   admin_permission = "administer role badge entities",
  *   entity_keys = {
  *     "id" = "id",
- *     "label" = "name",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",

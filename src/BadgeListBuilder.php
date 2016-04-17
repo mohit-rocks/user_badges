@@ -26,6 +26,7 @@ class BadgeListBuilder extends EntityListBuilder {
     $header['id'] = $this->t('Badge ID');
     $header['name'] = $this->t('Name');
     $header['badge_image'] = $this->t('Badge Image');
+    $header['weight'] = $this->t('Weight');
     return $header + parent::buildHeader();
   }
 
