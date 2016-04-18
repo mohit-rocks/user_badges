@@ -1,5 +1,7 @@
 name: User Badges
 type: module
-description: My Awesome Module
+description: User badges
 core: 8.x
 package: Other
+dependencies:
+  - image
