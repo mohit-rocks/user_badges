@@ -1,0 +1,14 @@
+id: user_badges_badges
+source:
+  plugin: user_badges_badges
+process:
+  id: bid
+  name: name
+  field_badge_image/fid:
+    plugin: migration
+    migration: user_badges_images
+    source: image
+  #TODO: deal with weights outside of -10,10
+  weight: weight
+destination:
+  plugin: entity:badge
