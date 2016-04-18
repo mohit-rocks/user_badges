@@ -35,12 +35,13 @@ class RoleBadgeListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\user_badges\Entity\RoleBadge */
     $row['id'] = $entity->id();
+    $entity_type_manager = \Drupal::entityTypeManager();
     /* @var \Drupal\user_badges\Entity\Badge $badge_entity */
-    $badge_entity = \Drupal::entityManager()->getStorage('badge')->load($entity->badge_id);
-    $row['badage_name'] = $badge_entity->name();
+    $badge_entity = $entity_type_manager->getStorage('badge')->load($entity->badge_id);
+    $row['badge_name'] = $badge_entity->label();
 
     /* @var \Drupal\user\Entity\Role $role_entity */
-    $role_entity = \Drupal::entityManager()->getStorage('user_role')->load($entity->role_id);
+    $role_entity = $entity_type_manager->getStorage('user_role')->load($entity->role_id);
     $row['role_name'] = $role_entity->label();
 
     return $row + parent::buildRow($entity);

@@ -51,7 +51,9 @@ use Drupal\user\UserInterface;
  * )
  */
 class Badge extends ContentEntityBase implements BadgeInterface {
+
   use EntityChangedTrait;
+
   /**
    * {@inheritdoc}
    */
@@ -61,26 +63,6 @@ class Badge extends ContentEntityBase implements BadgeInterface {
       'user_id' => \Drupal::currentUser()->id(),
     );
   }
-  /**
-   * {@inheritdoc}
-   */
-  public function getType() {
-    return $this->bundle();
-  }
-  /**
-   * {@inheritdoc}
-   */
-  public function getName() {
-    return $this->get('name')->value;
-  }
-  /**
-   * {@inheritdoc}
-   */
-  public function setName($name) {
-    $this->set('name', $name);
-    return $this;
-  }
-
   /**
    * {@inheritdoc}
    */
