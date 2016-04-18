@@ -133,6 +133,19 @@ class Badge extends ContentEntityBase implements BadgeInterface {
       ->setLabel(t('Language code'))
       ->setDescription(t('The language code for the Badge entity.'));
 
+    $fields['image'] = BaseFieldDefinition::create('image')
+      ->setLabel(t('Image'))
+      ->setDescription(t('The badge image'))
+      ->setDisplayOptions('view', array(
+        'type' => 'image',
+        'weight' => 1,
+        'label' => 'hidden',
+        'settings' => array(
+          'image_style' => 'thumbnail',
+        ),
+      ))
+      ->setDisplayConfigurable('view', TRUE);
+
     return $fields;
   }
 

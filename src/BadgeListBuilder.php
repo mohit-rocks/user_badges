@@ -9,6 +9,7 @@ namespace Drupal\user_badges;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
+use Drupal\Core\Link;
 use Drupal\Core\Routing\LinkGeneratorTrait;
 use Drupal\Core\Url;
 
@@ -36,7 +37,7 @@ class BadgeListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\user_badges\Entity\Badge */
     $row['id'] = $entity->id();
-    $row['name'] = $this->l(
+    $row['name'] = Link::fromTextAndUrl(
       $entity->label(),
       new Url(
         'entity.badge.edit_form', array(
@@ -44,13 +45,12 @@ class BadgeListBuilder extends EntityListBuilder {
         )
       )
     );
-    $image = array(
+    $row['badge_image'] = array(
       '#theme' => 'image_style',
       '#style_name' => 'thumbnail',
-      '#uri' => $entity->field_badge_image->entity->getFileUri(),
+      '#uri' => $entity->image->entity->getFileUri(),
       '#title' => $entity->label(),
     );
-    $row['badge_image'] = render($image);
     $row['weight'] = $entity->getBadgeWeight();
     return $row + parent::buildRow($entity);
   }
