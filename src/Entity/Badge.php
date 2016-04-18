@@ -7,13 +7,10 @@
 
 namespace Drupal\user_badges\Entity;
 
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
-use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user_badges\BadgeInterface;
-use Drupal\user\UserInterface;
 
 /**
  * Defines the Badge entity.
@@ -52,18 +49,6 @@ use Drupal\user\UserInterface;
  */
 class Badge extends ContentEntityBase implements BadgeInterface {
 
-  use EntityChangedTrait;
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
-    parent::preCreate($storage_controller, $values);
-    $values += array(
-      'user_id' => \Drupal::currentUser()->id(),
-    );
-  }
-
   /**
    * {@inheritdoc}
    */
@@ -82,36 +67,6 @@ class Badge extends ContentEntityBase implements BadgeInterface {
    */
   public function setName($name) {
     $this->set('name', $name);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getOwner() {
-    return $this->get('user_id')->entity;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getOwnerId() {
-    return $this->get('user_id')->target_id;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setOwnerId($uid) {
-    $this->set('user_id', $uid);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setOwner(UserInterface $account) {
-    $this->set('user_id', $account->id());
     return $this;
   }
 
@@ -140,11 +95,6 @@ class Badge extends ContentEntityBase implements BadgeInterface {
     $fields['uuid'] = BaseFieldDefinition::create('uuid')
       ->setLabel(t('UUID'))
       ->setDescription(t('The UUID of the Badge entity.'))
-      ->setReadOnly(TRUE);
-
-    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Authored by'))
-      ->setDescription(t('The user ID of author of the Badge entity.'))
       ->setReadOnly(TRUE);
 
     $fields['name'] = BaseFieldDefinition::create('string')
@@ -182,10 +132,6 @@ class Badge extends ContentEntityBase implements BadgeInterface {
     $fields['langcode'] = BaseFieldDefinition::create('language')
       ->setLabel(t('Language code'))
       ->setDescription(t('The language code for the Badge entity.'));
-
-    $fields['changed'] = BaseFieldDefinition::create('changed')
-      ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the entity was last edited.'));
 
     return $fields;
   }
