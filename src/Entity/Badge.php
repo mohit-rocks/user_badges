@@ -145,6 +145,10 @@ class Badge extends ContentEntityBase implements BadgeInterface {
           'image_style' => 'thumbnail',
         ),
       ))
+      ->setDisplayOptions('form', array(
+        'type' => 'image_image',
+        'weight' => 1,
+      ))
       ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
