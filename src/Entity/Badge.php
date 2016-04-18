@@ -34,6 +34,7 @@ use Drupal\user_badges\BadgeInterface;
  *   },
  *   base_table = "badge",
  *   admin_permission = "administer Badge entity",
+ *   field_ui_base_route = "entity.badge_type.edit_form",
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "name",
