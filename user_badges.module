@@ -31,3 +31,19 @@ function user_badges_theme() {
 
   return $theme;
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function user_badges_user_update(Drupal\Core\Entity\EntityInterface $entity) {
+  $badges = array();
+  /** @var \Drupal\user\Entity\User $entity */
+  $roles = $entity->getRoles();
+  foreach ($roles AS $role) {
+    $badges[] = \Drupal\user_badges\Entity\RoleBadge::getBadgeFromRole($role);
+  }
+  foreach ($badges AS $badge) {
+    /** @var \Drupal\user_badges\Entity\Badge $badge */
+    // @todo Assign each badge to user_badges field and update user. field
+  }
+}

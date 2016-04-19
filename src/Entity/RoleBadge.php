@@ -14,6 +14,7 @@ use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user_badges\RoleBadgeInterface;
 use Drupal\user\UserInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines the Role badge entity.
@@ -58,6 +59,7 @@ use Drupal\user\UserInterface;
  * )
  */
 class RoleBadge extends ContentEntityBase implements RoleBadgeInterface {
+
   /**
    * {@inheritdoc}
    */
@@ -111,6 +113,32 @@ class RoleBadge extends ContentEntityBase implements RoleBadgeInterface {
   public function setPublished($published) {
     $this->set('status', $published ? NODE_PUBLISHED : NODE_NOT_PUBLISHED);
     return $this;
+  }
+
+  /**
+   * Gets the Role relevant to particular badge.
+   *
+   * @return entity
+   *   Role entity.
+   */
+  public function getRoleFromBadge($badge_id) {
+    $entity_manager = \Drupal::entityTypeManager();
+    /** @var \Drupal\user\Entity\Role $role */
+    $role = $entity_manager->getStorage('role_badge')->loadByProperties(array('badge_id' => $badge_id));
+    return $role;
+  }
+
+  /**
+   * Gets the Badge relevant to particular role.
+   *
+   * @return entity
+   *   Badge entity.
+   */
+  public function getBadgeFromRole($role_id) {
+    $entity_manager = \Drupal::entityTypeManager();
+    /** @var \Drupal\user_badges\Entity\Badge $badge */
+    $badge = $entity_manager->getStorage('role_badge')->loadByProperties(array('role_id' => $role_id));
+    return $badge;
   }
 
   /**
