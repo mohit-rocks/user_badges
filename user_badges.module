@@ -33,17 +33,24 @@ function user_badges_theme() {
 }
 
 /**
- * Implements hook_ENTITY_TYPE_update().
+ * Implements hook_ENTITY_TYPE_presave().
  */
-function user_badges_user_update(Drupal\Core\Entity\EntityInterface $entity) {
+function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
   $badges = array();
   /** @var \Drupal\user\Entity\User $entity */
   $roles = $entity->getRoles();
   foreach ($roles AS $role) {
-    $badges[] = \Drupal\user_badges\Entity\RoleBadge::getBadgeFromRole($role);
+    $badges[] = array_values(\Drupal\user_badges\Entity\RoleBadge::getBadgeFromRole($role));
   }
-  foreach ($badges AS $badge) {
-    /** @var \Drupal\user_badges\Entity\Badge $badge */
-    // @todo Assign each badge to user_badges field and update user. field
+  // Setting field value to NULL to prevent same value multiple times.
+  $entity->get('field_user_badges')->setValue(NULL);
+
+  // Getting field value and appending each badge id to badge field.
+  $field_item_list = $entity->get('field_user_badges');
+  foreach ($badges AS $id => $badge) {
+    if (!empty($badge)) {
+      /** @var \Drupal\user_badges\Entity\Badge $badge */
+      $field_item_list->appendItem($badge[0]->id());
+    }
   }
 }
