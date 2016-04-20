@@ -10,3 +10,6 @@ user_badges.badge_type.*:
       label: 'Label'
     uuid:
       type: string
+    automatic:
+      type: boolean
+      label: 'Automatic Badge Assignment'

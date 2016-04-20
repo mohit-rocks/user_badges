@@ -59,4 +59,27 @@ class BadgeType extends ConfigEntityBase implements BadgeTypeInterface {
    */
   protected $label;
 
+  /**
+   * Automatic Badge Assignment.
+   * It is TRUE if badge assignment is automatic i.e Role badges. If user gets
+   * role, it's relevant role badge is assigned.
+   *
+   * @var string
+   */
+  protected $automatic;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getAutomaticBadgeStatus() {
+    return $this->automatic;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setAutomaticBadgeStatus($status) {
+    $this->automatic = $status;
+  }
+
 }
