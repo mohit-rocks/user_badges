@@ -33,7 +33,7 @@ use Drupal\user_badges\BadgeTypeInterface;
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
  *   },
  *   links = {
  *     "canonical" = "/admin/structure/badge_type/{badge_type}",
@@ -41,6 +41,10 @@ use Drupal\user_badges\BadgeTypeInterface;
  *     "edit-form" = "/admin/structure/badge_type/{badge_type}/edit",
  *     "delete-form" = "/admin/structure/badge_type/{badge_type}/delete",
  *     "collection" = "/admin/structure/badge_type"
+ *   }
+ * config_export = {
+ *     "label",
+ *     "automatic",
  *   }
  * )
  */
