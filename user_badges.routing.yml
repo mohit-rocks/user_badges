@@ -50,6 +50,47 @@ entity.badge.delete_form:
   options:
     _admin_route: TRUE
 
+
+entity.badge_type.collection:
+  path: 'admin/badge_types/list'
+  defaults:
+    _entity_list: 'badge_type'
+    _title: 'badge_type list'
+  requirements:
+    _permission: 'view badge type entities'
+  options:
+    _admin_route: TRUE
+
+entity.badge_type.add_form:
+  path: '/admin/structure/badge_type/add'
+  defaults:
+    _entity_form: badge_type.add
+    _title: 'Add badge type'
+  requirements:
+    _permission: 'add badge type entities'
+  options:
+    _admin_route: TRUE
+
+entity.badge_type.edit_form:
+  path: '/admin/structure/badge_type/{badge_type}/edit'
+  defaults:
+    _entity_form: badge_type.edit
+    _title: 'Edit badge type'
+  requirements:
+    _permission: 'edit badge type entities'
+  options:
+    _admin_route: TRUE
+
+entity.badge_type.delete_form:
+  path: '/admin/structure/badge_type/{badge_type}/delete'
+  defaults:
+    _entity_form: badge_type.delete
+    _title: 'Delete badge type'
+  requirements:
+    _permission: 'delete badge type entities'
+  options:
+    _admin_route: TRUE
+
 badge.settings:
   path: 'admin/structure/badge'
   defaults:
@@ -59,3 +100,4 @@ badge.settings:
     _permission: 'administer badge entities'
   options:
     _admin_route: TRUE
+

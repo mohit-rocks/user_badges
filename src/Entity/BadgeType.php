@@ -23,9 +23,6 @@ use Drupal\user_badges\BadgeTypeInterface;
  *       "edit" = "Drupal\user_badges\Form\BadgeTypeForm",
  *       "delete" = "Drupal\user_badges\Form\BadgeTypeDeleteForm"
  *     },
- *     "route_provider" = {
- *       "html" = "Drupal\user_badges\BadgeTypeHtmlRouteProvider",
- *     },
  *   },
  *   config_prefix = "badge_type",
  *   admin_permission = "administer site configuration",
@@ -43,6 +40,7 @@ use Drupal\user_badges\BadgeTypeInterface;
  *     "collection" = "/admin/structure/badge_type"
  *   },
  *   config_export = {
+ *     "id",
  *     "label",
  *     "automatic",
  *   }
