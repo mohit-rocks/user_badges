@@ -4,7 +4,7 @@ entity.badge.collection:
   route_name: entity.badge.collection
   description: 'List Badge entities'
   parent: system.admin_structure
-   weight: 100
+  weight: 100
 
 badge.admin.structure.settings:
   title: Badge settings
