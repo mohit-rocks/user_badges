@@ -4,10 +4,11 @@ source:
 process:
   id: bid
   name: name
-  field_badge_image/fid:
+  image/target_id:
     plugin: migration
     migration: user_badges_images
-    source: image
+    source: bid
+    no_stub: true
   #TODO: deal with weights outside of -10,10
   weight: weight
 destination:
