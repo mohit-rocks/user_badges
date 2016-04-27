@@ -16,7 +16,7 @@ function user_badges_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.user_badges':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('My Awesome Module') . '</p>';
+      $output .= '<p>' . t('User Badges module.') . '</p>';
       return $output;
 
     default:
@@ -37,10 +37,12 @@ function user_badges_theme() {
  */
 function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
   $badges = array();
+  $entity_manager = \Drupal::entityTypeManager();
   /** @var \Drupal\user\Entity\User $entity */
   $roles = $entity->getRoles();
   foreach ($roles AS $role) {
-    $badges[] = array_values(\Drupal\user_badges\Entity\RoleBadge::getBadgeFromRole($role));
+    $badges[] = $entity_manager->getStorage('badge')->loadByProperties(array('role_id' => $role));
+    // $badges[] = array_values(\Drupal\user_badges\Entity\RoleBadge::getBadgeFromRole($role));
   }
   // Setting field value to NULL to prevent same value multiple times.
   $entity->get('field_user_badges')->setValue(NULL);

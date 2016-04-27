@@ -13,22 +13,3 @@ edit badge entities:
 
 view badge entities:
   title: 'View Badge entities'
-add role badge entities:
-  title: 'Create new Role badge entities'
-
-administer role badge entities:
-  title: 'Administer Role badge entities'
-  description: 'Allow to access the administration form to configure Role badge entities.'
-  restrict access: true
-
-delete role badge entities:
-  title: 'Delete Role badge entities'
-
-edit role badge entities:
-  title: 'Edit Role badge entities'
-
-view published role badge entities:
-  title: 'View published Role badge entities'
-
-view unpublished role badge entities:
-  title: 'View unpublished Role badge entities'

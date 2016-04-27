@@ -88,6 +88,20 @@ class Badge extends ContentEntityBase implements BadgeInterface {
   /**
    * {@inheritdoc}
    */
+  public function getBadgeRoleId() {
+    return $this->get('role_id')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setBadgeRoleId($rid) {
+    return $this->set('role_id', $rid);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields['id'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('ID'))
@@ -151,6 +165,31 @@ class Badge extends ContentEntityBase implements BadgeInterface {
       ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+
+    $fields['role_id'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Role ID'))
+      ->setDescription(t('The ID of the Role entity.'))
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'user_role')
+      ->setSetting('handler', 'default')
+      ->setTranslatable(TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'hidden',
+        'type' => 'string',
+        'weight' => 0,
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 5,
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ),
+      ))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }

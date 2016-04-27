@@ -19,16 +19,3 @@ entity.badge_type.collection:
   parent: system.admin_structure
   weight: 99
 
-# Role badge menu items definition
-entity.role_badge.collection:
-  title: 'Role badge list'
-  route_name: entity.role_badge.collection
-  description: 'List Role badge entities'
-  parent: system.admin_structure
-  weight: 100
-
-role_badge.admin.structure.settings:
-  title: Role badge settings
-  description: 'Configure Role badge entities'
-  route_name: role_badge.settings
-  parent: system.admin_structure
