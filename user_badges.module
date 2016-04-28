@@ -41,7 +41,10 @@ function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
   /** @var \Drupal\user\Entity\User $entity */
   $roles = $entity->getRoles();
   foreach ($roles AS $role) {
-    $badges[] = $entity_manager->getStorage('badge')->loadByProperties(array('role_id' => $role));
+    $role_badge = $entity_manager->getStorage('badge')->loadByProperties(array('role_id' => $role));
+    if (!empty($role_badge)) {
+      $badges[] = $role_badge;
+    }
     // $badges[] = array_values(\Drupal\user_badges\Entity\RoleBadge::getBadgeFromRole($role));
   }
   // Setting field value to NULL to prevent same value multiple times.
@@ -52,7 +55,7 @@ function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
   foreach ($badges AS $id => $badge) {
     if (!empty($badge)) {
       /** @var \Drupal\user_badges\Entity\Badge $badge */
-      $field_item_list->appendItem($badge[0]->id());
+      $field_item_list->appendItem($badge[1]->id());
     }
   }
 }
