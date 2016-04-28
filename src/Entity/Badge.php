@@ -11,6 +11,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user_badges\BadgeInterface;
+use Drupal\user\RoleInterface;
 
 /**
  * Defines the Badge entity.
@@ -88,15 +89,45 @@ class Badge extends ContentEntityBase implements BadgeInterface {
   /**
    * {@inheritdoc}
    */
-  public function getBadgeRoleId() {
-    return $this->get('role_id')->value;
+  public function getBadgeRoleId($exclude_locked_roles = FALSE) {
+    //return $this->get('role_id')->value;
+    $roles = array();
+
+    /** @var \Drupal\user\User $user */
+    $user = \Drupal::currentUser();
+
+    // Users with an ID always have the authenticated user role.
+    if (!$exclude_locked_roles) {
+      if ($user->isAuthenticated()) {
+        $roles[] = RoleInterface::AUTHENTICATED_ID;
+      }
+      else {
+        $roles[] = RoleInterface::ANONYMOUS_ID;
+      }
+    }
+
+    foreach ($this->get('role_id') as $role) {
+      if ($role->target_id) {
+        $roles[] = $role->target_id;
+      }
+    }
+
+    return $roles;
   }
 
   /**
    * {@inheritdoc}
    */
   public function setBadgeRoleId($rid) {
-    return $this->set('role_id', $rid);
+    // return $this->set('role_id', $rid);
+
+    if (in_array($rid, [RoleInterface::AUTHENTICATED_ID, RoleInterface::ANONYMOUS_ID])) {
+      throw new \InvalidArgumentException('Anonymous or authenticated role ID must not be assigned manually.');
+    }
+
+    $roles = $this->getRoles(TRUE);
+    $roles[] = $rid;
+    $this->set('role_id', array_unique($roles));
   }
 
   /**
@@ -168,6 +199,7 @@ class Badge extends ContentEntityBase implements BadgeInterface {
 
     $fields['role_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Role ID'))
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDescription(t('The ID of the Role entity.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user_role')

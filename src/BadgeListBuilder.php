@@ -28,7 +28,7 @@ class BadgeListBuilder extends EntityListBuilder {
     $header['name'] = $this->t('Name');
     $header['badge_image'] = $this->t('Badge Image');
     $header['weight'] = $this->t('Weight');
-    $header['role_id'] = $this->t('Role');
+    $header['roles']['data'] = $this->t('Role');
     return $header + parent::buildHeader();
   }
 
@@ -53,16 +53,18 @@ class BadgeListBuilder extends EntityListBuilder {
       '#title' => $entity->label(),
     );
     $row['weight'] = $entity->getBadgeWeight();
-    $role_id = $entity->getBadgeRoleId();
-    if ($role_id) {
-      /** @var \Drupal\User\Entity\Role $role */
-      $role = \Drupal::entityManager()->getStorage('user')->load($role_id);
-      $role_name = $role->label();
+
+    $users_roles = array();
+    foreach ($entity->getBadgeRoleId() as $role) {
+      if (!empty($role)) {
+        $users_roles[] = $role;
+      }
     }
-    else {
-      $role_name = '';
-    }
-    $row['role_id'] = $role_name;
+    asort($users_roles);
+    $row['roles']['data'] = array(
+      '#theme' => 'item_list',
+      '#items' => $users_roles,
+    );
     return $row + parent::buildRow($entity);
   }
 
