@@ -107,9 +107,7 @@ class Badge extends ContentEntityBase implements BadgeInterface {
     }
 
     foreach ($this->get('role_id') as $role) {
-      if ($role->target_id) {
-        $roles[] = $role->target_id;
-      }
+      $roles[] = $role->target_id;
     }
 
     return $roles;
@@ -121,8 +119,8 @@ class Badge extends ContentEntityBase implements BadgeInterface {
   public function setBadgeRoleId($rid) {
     // return $this->set('role_id', $rid);
 
-    if (in_array($rid, [RoleInterface::AUTHENTICATED_ID, RoleInterface::ANONYMOUS_ID])) {
-      throw new \InvalidArgumentException('Anonymous or authenticated role ID must not be assigned manually.');
+    if (in_array($rid, [RoleInterface::ANONYMOUS_ID])) {
+      throw new \InvalidArgumentException('Anonymous users should not have associated badges.');
     }
 
     $roles = $this->getRoles(TRUE);
