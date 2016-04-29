@@ -89,22 +89,9 @@ class Badge extends ContentEntityBase implements BadgeInterface {
   /**
    * {@inheritdoc}
    */
-  public function getBadgeRoleId($exclude_locked_roles = FALSE) {
+  public function getBadgeRoleId() {
     //return $this->get('role_id')->value;
     $roles = array();
-
-    /** @var \Drupal\user\User $user */
-    $user = \Drupal::currentUser();
-
-    // Users with an ID always have the authenticated user role.
-    if (!$exclude_locked_roles) {
-      if ($user->isAuthenticated()) {
-        $roles[] = RoleInterface::AUTHENTICATED_ID;
-      }
-      else {
-        $roles[] = RoleInterface::ANONYMOUS_ID;
-      }
-    }
 
     foreach ($this->get('role_id') as $role) {
       $roles[] = $role->target_id;
