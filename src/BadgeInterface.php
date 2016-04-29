@@ -69,7 +69,7 @@ interface BadgeInterface extends ContentEntityInterface {
    * @return integer
    *   Role id of role associated with Badge
    */
-  public function getBadgeRoleId();
+  public function getBadgeRoleIds();
 
   /**
    * Sets Role id of Badge.

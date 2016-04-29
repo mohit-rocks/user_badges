@@ -54,13 +54,7 @@ class BadgeListBuilder extends EntityListBuilder {
     );
     $row['weight'] = $entity->getBadgeWeight();
 
-    $users_roles = array();
-    foreach ($entity->getBadgeRoleId() as $role) {
-      if (!empty($role)) {
-        $users_roles[] = $role;
-      }
-    }
-    asort($users_roles);
+    $users_roles = $entity->getBadgeRoleIds();
     $row['roles']['data'] = array(
       '#theme' => 'item_list',
       '#items' => $users_roles,
