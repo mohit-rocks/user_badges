@@ -62,5 +62,24 @@ interface BadgeInterface extends ContentEntityInterface {
    *   The called Badge entity.
    */
   public function setBadgeWeight($weight);
-  
+
+  /**
+   * Gets the Role id associated with Badge.
+   *
+   * @return integer
+   *   Role id of role associated with Badge
+   */
+  public function getBadgeRoleIds();
+
+  /**
+   * Sets Role id of Badge.
+   *
+   * @param integer $rid
+   *   Role id of Role
+   *
+   * @return \Drupal\user_badges\BadgeInterface
+   *   The called Badge entity.
+   */
+  public function setBadgeRoleId($rid);
+
 }

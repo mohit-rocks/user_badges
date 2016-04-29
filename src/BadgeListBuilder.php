@@ -28,6 +28,7 @@ class BadgeListBuilder extends EntityListBuilder {
     $header['name'] = $this->t('Name');
     $header['badge_image'] = $this->t('Badge Image');
     $header['weight'] = $this->t('Weight');
+    $header['roles']['data'] = $this->t('Role');
     return $header + parent::buildHeader();
   }
 
@@ -52,6 +53,12 @@ class BadgeListBuilder extends EntityListBuilder {
       '#title' => $entity->label(),
     );
     $row['weight'] = $entity->getBadgeWeight();
+
+    $users_roles = $entity->getBadgeRoleIds();
+    $row['roles']['data'] = array(
+      '#theme' => 'item_list',
+      '#items' => $users_roles,
+    );
     return $row + parent::buildRow($entity);
   }
 
