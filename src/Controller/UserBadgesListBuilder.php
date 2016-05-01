@@ -87,7 +87,7 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
 
     $form['badge_listing_table'] = array(
       '#type' => 'table',
-      '#header' => array(t('Label'), t('Weight')),
+      '#header' => array(t('Label'), t('Weight'), t('Select Weight')),
       '#empty' => t('There are no badges yet'),
       '#tableselect' => TRUE,
       '#tabledrag' => array(
@@ -99,22 +99,22 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
       ),
     );
     $badges = $user->get('field_user_badges')->getValue();
-    foreach ($badges as $id => $badge_id) {
+    foreach ($badges as $badge_id) {
       /** @var \Drupal\user_badges\Entity\Badge $badge */
       $badge = $entity_manager->getStorage('badge')->load($badge_id['target_id']);
-      $form['badge_listing_table'][$id]['#attributes']['class'][] = 'draggable';
-      $form['badge_listing_table'][$id]['#weight'] = $badge->getBadgeWeight();
+      $form['badge_listing_table'][$badge->id()]['#attributes']['class'][] = 'draggable';
+      $form['badge_listing_table'][$badge->id()]['#weight'] = $badge->getBadgeWeight();
 
       // Some table columns containing raw markup.
-      $form['badge_listing_table'][$id]['label'] = array(
+      $form['badge_listing_table'][$badge->id()]['label'] = array(
         '#plain_text' => $badge->label(),
       );
-      $form['badge_listing_table'][$id]['id'] = array(
+      $form['badge_listing_table'][$badge->id()]['id'] = array(
         '#plain_text' => $badge->id(),
       );
 
       // TableDrag: Weight column element.
-      $form['badge_listing_table'][$id]['weight'] = array(
+      $form['badge_listing_table'][$badge->id()]['weight'] = array(
         '#type' => 'weight',
         '#title' => t('Weight for @title', array('@title' => $badge->label())),
         '#title_display' => 'invisible',
@@ -147,7 +147,7 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-  // No Submit
+    //$badges = $this->storage->loadMultiple(array_keys($form_state->getValue('badge_listing_table')));
   }
 
 }
