@@ -18,16 +18,8 @@ use Drupal\Core\Url;
  *
  * @ingroup user_badges
  */
-class BadgeListBuilder extends EntityListBuilder{
+class BadgeListBuilder extends EntityListBuilder {
   use LinkGeneratorTrait;
-
-  /**
-   * The form builder.
-   *
-   * @var \Drupal\Core\Form\FormBuilderInterface
-   */
-  protected $formBuilder;
-
   /**
    * {@inheritdoc}
    */
@@ -69,4 +61,5 @@ class BadgeListBuilder extends EntityListBuilder{
     );
     return $row + parent::buildRow($entity);
   }
+
 }
