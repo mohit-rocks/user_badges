@@ -34,7 +34,7 @@ use Drupal\user\RoleInterface;
  *     },
  *   },
  *   base_table = "badge",
- *   bundle_entity_type = "taxonomy_vocabulary",
+ *   bundle_entity_type = "badge_type",
  *   admin_permission = "administer Badge entity",
  *   field_ui_base_route = "entity.badge_type.edit_form",
  *   entity_keys = {
