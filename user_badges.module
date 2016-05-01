@@ -50,7 +50,7 @@ function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
   $list = [];
   foreach ($field_item_list as $item) {
     $badge_id = $item->get('target_id')->getValue();
-    if (!isset($all_role_badges[$badge_id]) || in_array($all_role_badges[$badge_id]->role_id->target_id, $roles)) {
+    if (!isset($all_role_badges[$badge_id]) || array_intersect($all_role_badges[$badge_id]->getBadgeRoleIds(), $roles)) {
       $list[] = ['target_id' => $badge_id];
     }
   }
