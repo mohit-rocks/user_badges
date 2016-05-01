@@ -39,17 +39,20 @@ function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
   $entity_manager = \Drupal::entityTypeManager();
   /** @var \Drupal\user\Entity\User $entity */
   $roles = $entity->getRoles();
-  $role_badges = $entity_manager->getStorage('badge')->loadByProperties(array('role_id' => $roles));
-
-  // Setting field value to NULL to prevent same value multiple times.
-  $entity->get('field_user_badges')->setValue(NULL);
+  $badge_storage = $entity_manager->getStorage('badge');
+  $all_role_badge_ids = $badge_storage->getQuery()
+    ->exists('role_id')
+    ->execute();
+  $all_role_badges = $badge_storage->loadMultiple($all_role_badge_ids);
 
   // Getting field value and appending each badge id to badge field.
   $field_item_list = $entity->get('field_user_badges');
-  foreach ($role_badges AS $id => $badge) {
-    if (!empty($badge)) {
-      /** @var \Drupal\user_badges\Entity\Badge $badge */
-      $field_item_list->appendItem($badge->id());
+  $list = [];
+  foreach ($field_item_list as $item) {
+    $badge_id = $item->get('target_id')->getValue();
+    if (!isset($all_role_badges[$badge_id]) || in_array($all_role_badges[$badge_id]->role_id->target_id, $roles)) {
+      $list[] = ['target_id' => $badge_id];
     }
   }
+  $field_item_list->setValue($list);
 }

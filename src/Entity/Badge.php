@@ -34,12 +34,14 @@ use Drupal\user\RoleInterface;
  *     },
  *   },
  *   base_table = "badge",
+ *   bundle_entity_type = "taxonomy_vocabulary",
  *   admin_permission = "administer Badge entity",
  *   field_ui_base_route = "entity.badge_type.edit_form",
  *   entity_keys = {
  *     "id" = "id",
+ *     "bundle" = "type",
  *     "label" = "name",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
  *   },
  *   links = {
  *     "canonical" = "/admin/badge/{badge}",
@@ -113,15 +115,7 @@ class Badge extends ContentEntityBase implements BadgeInterface {
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
-    $fields['id'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('ID'))
-      ->setDescription(t('The ID of the Badge entity.'))
-      ->setReadOnly(TRUE);
-    $fields['uuid'] = BaseFieldDefinition::create('uuid')
-      ->setLabel(t('UUID'))
-      ->setDescription(t('The UUID of the Badge entity.'))
-      ->setReadOnly(TRUE);
-
+    $fields = parent::baseFieldDefinitions($entity_type);
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Name'))
       ->setDescription(t('The name of the Badge entity.'))
@@ -153,10 +147,6 @@ class Badge extends ContentEntityBase implements BadgeInterface {
         'weight' => -2,
       ))
       ->setDisplayConfigurable('form', TRUE);
-
-    $fields['langcode'] = BaseFieldDefinition::create('language')
-      ->setLabel(t('Language code'))
-      ->setDescription(t('The language code for the Badge entity.'));
 
     $fields['image'] = BaseFieldDefinition::create('image')
       ->setLabel(t('Image'))
