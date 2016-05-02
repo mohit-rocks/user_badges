@@ -41,7 +41,7 @@ function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
   // Keep non-role items and ten append each badge id to badge field.
   $field_item_list = $entity->get('field_user_badges');
   $field_item_list->filter(function (EntityReferenceItem $item) {
-    return $item->get('entity')->get('role_id')->isEmpty();
+    return $item->get('entity')->getValue()->get('role_id')->isEmpty();
   });
   $badge_ids = \Drupal::entityTypeManager()->getStorage('badge')->getQuery()
     ->condition('role_id', $entity->getRoles(), 'IN')
