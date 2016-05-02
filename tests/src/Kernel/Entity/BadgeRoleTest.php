@@ -62,24 +62,35 @@ class BadgeRoleTest extends KernelTestBase {
     /** @var \Drupal\user\Entity\User $user */
     $user = User::create(['name' => $this->randomMachineName()]);
     $user->save();
-    $this->assertTrue($user->get('field_user_badges')->isEmpty());
+    $item_list = $user->get('field_user_badges');
+    $this->assertTrue($item_list->isEmpty());
+    // This role has only one badge.
     $user->addRole($this->rids[1]);
     $user->save();
-    $this->assertSame($user->get('field_user_badges')->count(), 1);
-    $this->assertSame($user->get('field_user_badges')->get(0)->getValue(), ['target_id' => $this->badgeIds[2]]);
+    $this->assertSame($item_list->count(), 1);
+    $this->assertSame($item_list->get(0)->getValue(), ['target_id' => $this->badgeIds[2]]);
+    // Remove the role, check no badges are left.
     $user->removeRole($this->rids[1]);
     $user->save();
-    $this->assertTrue($user->get('field_user_badges')->isEmpty());
+    $this->assertTrue($item_list->isEmpty());
+    // This role has two badges.
     $user->addRole($this->rids[0]);
     $user->save();
-    $this->assertSame($user->get('field_user_badges')->count(), 2);
-    $this->assertSame($user->get('field_user_badges')->get(0)->getValue(), ['target_id' => $this->badgeIds[1]]);
-    $this->assertSame($user->get('field_user_badges')->get(1)->getValue(), ['target_id' => $this->badgeIds[2]]);
-    $user->get('field_user_badges')->appendItem($this->badgeIds[0]);
-    $user->save();
-    $this->assertSame($user->get('field_user_badges')->count(), 3);
+    $this->assertSame($item_list->count(), 2);
+    $this->assertSame($item_list->get(0)->getValue(), ['target_id' => $this->badgeIds[1]]);
+    $this->assertSame($item_list->get(1)->getValue(), ['target_id' => $this->badgeIds[2]]);
+    // Now add a non-role badge.
+    $item_list->appendItem($this->badgeIds[0]);
+    // Test for rekey: right now we have badges 1,2, 0.
+    $this->assertSame($item_list->count(), 3);
     for ($i = 0; $i < 3; $i++) {
-      $this->assertSame($user->get('field_user_badges')->get($i)->getValue(), ['target_id' => $this->badgeIds[$i]]);
+      $this->assertSame($item_list->get($i)->getValue(), ['target_id' => $this->badgeIds[($i + 1) % 3]]);
+    }
+    $user->save();
+    $this->assertSame($item_list->count(), 3);
+    // After save we have badges 0, 1, 2.
+    for ($i = 0; $i < 3; $i++) {
+      $this->assertSame($item_list->get($i)->getValue(), ['target_id' => $this->badgeIds[$i]]);
     }
   }
 }
