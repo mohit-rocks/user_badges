@@ -43,9 +43,8 @@ function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
   $field_item_list->filter(function (EntityReferenceItem $item) {
     return $item->get('entity')->get('role_id')->isEmpty();
   });
-  $roles = $entity->getRoles();
   $badge_ids = \Drupal::entityTypeManager()->getStorage('badge')->getQuery()
-    ->condition('role_id', $roles, 'IN')
+    ->condition('role_id', $entity->getRoles(), 'IN')
     ->execute();
   foreach ($badge_ids as $id) {
     $field_item_list->appendItem($id);
