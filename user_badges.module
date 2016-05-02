@@ -5,6 +5,7 @@
  * Contains user_badges.module..
  */
 
+use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -36,23 +37,17 @@ function user_badges_theme() {
  * Implements hook_ENTITY_TYPE_presave().
  */
 function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
-  $entity_manager = \Drupal::entityTypeManager();
   /** @var \Drupal\user\Entity\User $entity */
-  $roles = $entity->getRoles();
-  $badge_storage = $entity_manager->getStorage('badge');
-  $all_role_badge_ids = $badge_storage->getQuery()
-    ->exists('role_id')
-    ->execute();
-  $all_role_badges = $badge_storage->loadMultiple($all_role_badge_ids);
-
-  // Getting field value and appending each badge id to badge field.
+  // Keep non-role items and ten append each badge id to badge field.
   $field_item_list = $entity->get('field_user_badges');
-  $list = [];
-  foreach ($field_item_list as $item) {
-    $badge_id = $item->get('target_id')->getValue();
-    if (!isset($all_role_badges[$badge_id]) || array_intersect($all_role_badges[$badge_id]->getBadgeRoleIds(), $roles)) {
-      $list[] = ['target_id' => $badge_id];
-    }
+  $field_item_list->filter(function (EntityReferenceItem $item) {
+    return $item->get('entity')->get('role_id')->isEmpty();
+  });
+  $roles = $entity->getRoles();
+  $badge_ids = \Drupal::entityTypeManager()->getStorage('badge')->getQuery()
+    ->condition('role_id', $roles, 'IN')
+    ->execute();
+  foreach ($badge_ids as $id) {
+    $field_item_list->appendItem($id);
   }
-  $field_item_list->setValue($list);
 }
