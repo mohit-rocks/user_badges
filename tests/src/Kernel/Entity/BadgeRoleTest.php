@@ -67,8 +67,7 @@ class BadgeRoleTest extends KernelTestBase {
     // This role has only one badge.
     $user->addRole($this->rids[1]);
     $user->save();
-    $this->assertSame($item_list->count(), 1);
-    $this->assertSame($item_list->get(0)->getValue(), ['target_id' => $this->badgeIds[2]]);
+    $this->assertSame($item_list->getValue(), [['target_id' => $this->badgeIds[2]]]);
     // Remove the role, check no badges are left.
     $user->removeRole($this->rids[1]);
     $user->save();
@@ -76,9 +75,7 @@ class BadgeRoleTest extends KernelTestBase {
     // This role has two badges.
     $user->addRole($this->rids[0]);
     $user->save();
-    $this->assertSame($item_list->count(), 2);
-    $this->assertSame($item_list->get(0)->getValue(), ['target_id' => $this->badgeIds[1]]);
-    $this->assertSame($item_list->get(1)->getValue(), ['target_id' => $this->badgeIds[2]]);
+    $this->assertSame($item_list->getValue(), [['target_id' => $this->badgeIds[1]], ['target_id' => $this->badgeIds[2]]]);
     // Now add a non-role badge.
     $item_list->appendItem($this->badgeIds[0]);
     // Test for rekey: right now we have badges 1,2, 0.
