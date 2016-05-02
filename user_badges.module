@@ -39,11 +39,20 @@ function user_badges_theme() {
 function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
   /** @var \Drupal\user\Entity\User $entity */
   // Keep non-role items and ten append each badge id to badge field.
-  $field_item_list = $entity->get('field_user_badges');
-  $field_item_list->filter(function (EntityReferenceItem $item) {
-    return $item->get('entity')->getValue()->get('role_id')->isEmpty();
-  });
-  array_map([$field_item_list, 'appendItem'], \Drupal::entityQuery('badge')
+  $badge_role_ids = \Drupal::entityQuery('badge')
     ->condition('role_id', $entity->getRoles(), 'IN')
-    ->execute());
+    ->execute();
+  $item_list = $entity->get('field_user_badges');
+  $item_list->filter(function (EntityReferenceItem $item) use (&$badge_role_ids) {
+    $badge = $item->get('entity')->getValue();
+    $target_id = $badge->id();
+    if ($badge->get('role_id')->isEmpty() || isset($badge_role_ids[$target_id])) {
+      unset($badge_role_ids[$target_id]);
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
+  });
+  array_map([$item_list, 'appendItem'], $badge_role_ids);
 }
