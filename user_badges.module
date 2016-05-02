@@ -37,19 +37,19 @@ function user_badges_theme() {
  */
 function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
   /** @var \Drupal\user\Entity\User $entity */
-  $roles = $entity->getRoles();
+  $account_role_ids = $entity->getRoles();
   $field_item_list = $entity->get('field_user_badges');
   // Keep a badge if it doesn't have any roles or if it has a role among the
   // current roles.
-  $field_item_list->filter(function (EntityReferenceItem $item) use ($roles) {
+  $field_item_list->filter(function (EntityReferenceItem $item) use ($account_role_ids) {
     /** @var \Drupal\user_badges\Entity\Badge $badge */
-    $role_ids = $item->get('entity')->getValue()->getBadgeRoleIds();
-    return !$role_ids || array_intersect($role_ids, $roles);
+    $badge_role_ids = $item->get('entity')->getValue()->getBadgeRoleIds();
+    return !$badge_role_ids || array_intersect($badge_role_ids, $account_role_ids);
   });
   // Add the rest.
   $new_role_badge_ids = \Drupal::entityQuery('badge')
     ->condition('id', explode(', ', $field_item_list->getString()), 'NOT IN')
-    ->condition('role_id', $roles, 'IN')
+    ->condition('role_id', $account_role_ids, 'IN')
     ->execute();
   array_map([$field_item_list, 'appendItem'], $new_role_badge_ids);
 }
