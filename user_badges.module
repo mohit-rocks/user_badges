@@ -40,22 +40,21 @@ function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
   /** @var \Drupal\user\Entity\User $entity */
   $account_role_ids = $entity->getRoles();
   $field_item_list = $entity->get('field_user_badges');
-  // Keep a badge if it doesn't have any roles or if it has a role among the
-  // current roles.
-  $field_item_list->filter(function (EntityReferenceItem $item) use ($account_role_ids) {
-    if ($item->isEmpty()) {
-      return FALSE;
-    }
+  foreach ($field_item_list->filterEmptyItems() as $index => $item) {
     /** @var \Drupal\user_badges\Entity\Badge $badge */
-    $badge_role_ids = $item->get('entity')->getValue()->getBadgeRoleIds();
-    return !$badge_role_ids || array_intersect($badge_role_ids, $account_role_ids);
-  });
+    $badge = $item->get('entity')->getValue();
+    $badge_role_ids = $badge->getBadgeRoleIds();
+    // Remove the badge if it has roles but none among the current ones.
+    if ($badge_role_ids && !array_intersect($badge_role_ids, $account_role_ids)) {
+      $field_item_list->removeItem($index);
+    }
+    else {
+      $target_ids[] = $badge->id();
+    }
+  }
   // Add the rest.
   $query = \Drupal::entityQuery('badge')->condition('role_id', $account_role_ids, 'IN');
-  $target_ids = array_map(function ($item) {
-    return $item['target_id'];
-  }, $field_item_list->getValue());
-  if ($target_ids) {
+  if (!empty($target_ids)) {
     $query->condition('id', $target_ids, 'NOT IN');
   }
   array_map([$field_item_list, 'appendItem'], $query->execute());
