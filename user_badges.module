@@ -48,9 +48,8 @@ function user_badges_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
     return !$badge_role_ids || array_intersect($badge_role_ids, $account_role_ids);
   });
   // Add the rest.
-  $new_role_badge_ids = \Drupal::entityQuery('badge')
+  array_map([$field_item_list, 'appendItem'], \Drupal::entityQuery('badge')
     ->condition('id', explode(', ', $field_item_list->getString()), 'NOT IN')
     ->condition('role_id', $account_role_ids, 'IN')
-    ->execute();
-  array_map([$field_item_list, 'appendItem'], $new_role_badge_ids);
+    ->execute());
 }
