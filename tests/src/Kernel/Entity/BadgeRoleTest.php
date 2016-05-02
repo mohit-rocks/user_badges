@@ -27,7 +27,7 @@ class BadgeRoleTest extends KernelTestBase {
   /**
    * @var array
    */
-  protected $badges = [];
+  protected $badgeIds = [];
 
   /**
    * {@inheritdoc}
@@ -54,7 +54,7 @@ class BadgeRoleTest extends KernelTestBase {
         'role_id' => $rids,
       ]);
       $badge->save();
-      $this->badges[] = $badge;
+      $this->badgeIds[] = $badge->id();
     }
   }
 
@@ -66,14 +66,20 @@ class BadgeRoleTest extends KernelTestBase {
     $user->addRole($this->rids[1]);
     $user->save();
     $this->assertSame($user->get('field_user_badges')->count(), 1);
-    $this->assertSame($user->get('field_user_badges')->get(0)->getValue(), ['target_id' => $this->badges[2]->id()]);
+    $this->assertSame($user->get('field_user_badges')->get(0)->getValue(), ['target_id' => $this->badgeIds[2]]);
     $user->removeRole($this->rids[1]);
     $user->save();
     $this->assertTrue($user->get('field_user_badges')->isEmpty());
     $user->addRole($this->rids[0]);
     $user->save();
     $this->assertSame($user->get('field_user_badges')->count(), 2);
-    $this->assertSame($user->get('field_user_badges')->get(0)->getValue(), ['target_id' => $this->badges[1]->id()]);
-    $this->assertSame($user->get('field_user_badges')->get(1)->getValue(), ['target_id' => $this->badges[2]->id()]);
+    $this->assertSame($user->get('field_user_badges')->get(0)->getValue(), ['target_id' => $this->badgeIds[1]]);
+    $this->assertSame($user->get('field_user_badges')->get(1)->getValue(), ['target_id' => $this->badgeIds[2]]);
+    $user->get('field_user_badges')->appendItem($this->badgeIds[0]);
+    $user->save();
+    $this->assertSame($user->get('field_user_badges')->count(), 3);
+    for ($i = 0; $i < 3; $i++) {
+      $this->assertSame($user->get('field_user_badges')->get($i)->getValue(), ['target_id' => $this->badgeIds[$i]]);
+    }
   }
 }
