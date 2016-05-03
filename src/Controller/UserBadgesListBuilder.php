@@ -89,9 +89,6 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $entity_manager = \Drupal::entityManager();
-    $form['#attached']['library'][] = 'core/drupal.tableheader';
-    $form['#attributes']['class'][] = 'clearfix';
     /** @var \Drupal\user\Entity\User $user */
     $user = $this->user;
 
@@ -100,11 +97,10 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
       '#header' => array(t('Label'), t('Weight'), t('Select Weight')),
       '#empty' => t('There are no badges yet'),
     );
-    $badges = $user->get('field_user_badges')->getValue();
-    foreach ($badges as $badge_id) {
+    $field_item_list = $user->get('field_user_badges');
+    foreach ($field_item_list->filterEmptyItems() as $index => $item) {
       /** @var \Drupal\user_badges\Entity\Badge $badge */
-      $badge = $entity_manager->getStorage('badge')->load($badge_id['target_id']);
-      $form['badge'][$badge->id()]['#badge'] = $badge;
+      $badge = $item->get('entity')->getValue();
       $form['badge'][$badge->id()]['#attributes']['class'][] = 'draggable';
       $form['badge'][$badge->id()]['#weight'] = $badge->getBadgeWeight();
 
@@ -159,8 +155,8 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
     $badges = $this->storageController->loadMultiple(array_keys($form_state->getValue('badge')));
     foreach ($badges AS $badge) {
       /** @var \Drupal\user_badges\Entity\Badge $badge */
-      $badge->setBadgeWeight($values[$badge->id()]['weight']);
-      $badge->save();
+      // $badge->setBadgeWeight($values[$badge->id()]['weight']);
+      // $badge->save();
     }
   }
 
