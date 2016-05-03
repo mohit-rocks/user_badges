@@ -13,6 +13,7 @@ use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Entity\EntityManagerInterface;
 
 /**
  * Class UserBadgesListBuilder.
@@ -36,13 +37,21 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
   protected $user;
 
   /**
+   * The term storage handler.
+   *
+   * @var \Drupal\taxonomy\TermStorageInterface
+   */
+  protected $storageController;
+
+  /**
    * Constructs a new BlockListBuilder object.
 
    * @param \Drupal\Core\Form\FormBuilderInterface $form_builder
    *   The form builder.
    */
-  public function __construct(FormBuilderInterface $form_builder) {
+  public function __construct(FormBuilderInterface $form_builder, EntityManagerInterface $entity_manager) {
     $this->formBuilder = $form_builder;
+    $this->storageController = $entity_manager->getStorage('badge');
   }
 
   /**
@@ -50,7 +59,8 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('form_builder')
+      $container->get('form_builder'),
+      $container->get('entity.manager')
     );
   }
 
@@ -85,36 +95,29 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
     /** @var \Drupal\user\Entity\User $user */
     $user = $this->user;
 
-    $form['badge_listing_table'] = array(
+    $form['badge'] = array(
       '#type' => 'table',
       '#header' => array(t('Label'), t('Weight'), t('Select Weight')),
       '#empty' => t('There are no badges yet'),
-      '#tableselect' => TRUE,
-      '#tabledrag' => array(
-        array(
-          'action' => 'order',
-          'relationship' => 'sibling',
-          'group' => 'user-badges-order-weight',
-        ),
-      ),
     );
     $badges = $user->get('field_user_badges')->getValue();
     foreach ($badges as $badge_id) {
       /** @var \Drupal\user_badges\Entity\Badge $badge */
       $badge = $entity_manager->getStorage('badge')->load($badge_id['target_id']);
-      $form['badge_listing_table'][$badge->id()]['#attributes']['class'][] = 'draggable';
-      $form['badge_listing_table'][$badge->id()]['#weight'] = $badge->getBadgeWeight();
+      $form['badge'][$badge->id()]['#badge'] = $badge;
+      $form['badge'][$badge->id()]['#attributes']['class'][] = 'draggable';
+      $form['badge'][$badge->id()]['#weight'] = $badge->getBadgeWeight();
 
       // Some table columns containing raw markup.
-      $form['badge_listing_table'][$badge->id()]['label'] = array(
+      $form['badge'][$badge->id()]['label'] = array(
         '#plain_text' => $badge->label(),
       );
-      $form['badge_listing_table'][$badge->id()]['id'] = array(
-        '#plain_text' => $badge->id(),
+      $form['badge'][$badge->id()]['id'] = array(
+        '#plain_text' => $badge->getBadgeWeight(),
       );
 
       // TableDrag: Weight column element.
-      $form['badge_listing_table'][$badge->id()]['weight'] = array(
+      $form['badge'][$badge->id()]['weight'] = array(
         '#type' => 'weight',
         '#title' => t('Weight for @title', array('@title' => $badge->label())),
         '#title_display' => 'invisible',
@@ -122,6 +125,11 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
         '#attributes' => array('class' => array('user-badges-order-weight')),
       );
     }
+    $form['badge']['#tabledrag'][] = array(
+      'action' => 'order',
+      'relationship' => 'sibling',
+      'group' => 'user-badges-order-weight',
+    );
 
     $form['actions'] = array(
       '#tree' => FALSE,
@@ -147,7 +155,13 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    //$badges = $this->storage->loadMultiple(array_keys($form_state->getValue('badge_listing_table')));
+    $values = $form_state->getValue('badge');
+    $badges = $this->storageController->loadMultiple(array_keys($form_state->getValue('badge')));
+    foreach ($badges AS $badge) {
+      /** @var \Drupal\user_badges\Entity\Badge $badge */
+      $badge->setBadgeWeight($values[$badge->id()]['weight']);
+      $badge->save();
+    }
   }
 
 }
