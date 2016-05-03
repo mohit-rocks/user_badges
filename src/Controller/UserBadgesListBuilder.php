@@ -151,16 +151,10 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $values = $form_state->getValue('badge');
-    $badges = $this->storageController->loadMultiple(array_keys($form_state->getValue('badge')));
-    foreach ($badges AS $badge) {
-      /** @var \Drupal\user_badges\Entity\Badge $badge */
-      // $badge->setBadgeWeight($values[$badge->id()]['weight']);
-      // $badge->save();
-    }
+    $badge_ids = array_keys($form_state->getValue('badge'));
     /** @var \Drupal\user\Entity\User $user */
     $user = $this->user;
-    $user->set('field_user_badges',  \Drupal::typedDataManager()->create($user->getFieldDefinition('field_user_badges'), array_keys($form_state->getValue('badge')), 'field_user_badges', $user->getTypedData()));
+    $user->set('field_user_badges', $badge_ids);
     $user->save();
   }
 
