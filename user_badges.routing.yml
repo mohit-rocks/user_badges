@@ -101,3 +101,11 @@ badge.settings:
   options:
     _admin_route: TRUE
 
+user_badges.badges:
+  path: 'user/{user}/badges'
+  defaults:
+    _controller: '\Drupal\user_badges\Controller\UserBadgesListBuilder::badgesListing'
+    _title: 'User Badges'
+  requirements:
+    _permission: 'access content'
+    user: \d+
