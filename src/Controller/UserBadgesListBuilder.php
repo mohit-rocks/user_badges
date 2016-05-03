@@ -158,6 +158,10 @@ class UserBadgesListBuilder extends ControllerBase implements FormInterface{
       // $badge->setBadgeWeight($values[$badge->id()]['weight']);
       // $badge->save();
     }
+    /** @var \Drupal\user\Entity\User $user */
+    $user = $this->user;
+    $user->set('field_user_badges',  \Drupal::typedDataManager()->create($user->getFieldDefinition('field_user_badges'), array_keys($form_state->getValue('badge')), 'field_user_badges', $user->getTypedData()));
+    $user->save();
   }
 
 }
