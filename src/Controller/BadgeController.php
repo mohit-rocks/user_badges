@@ -52,8 +52,8 @@ class BadgeController extends ControllerBase {
   /**
    * Add.
    *
-   * @return string
-   *   Return Hello string.
+   * @return form
+   *   Returns badge creation form.
    */
   public function add(BadgeTypeInterface $badge_type) {
     $badge = $this->entityManager()->getStorage('badge')->create(array(

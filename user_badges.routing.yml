@@ -108,7 +108,7 @@ user_badges.badge_controller_addPage:
   requirements:
     _permission: 'administer badge entities'
   options:
-      _admin_route: TRUE
+    _admin_route: TRUE
 
 user_badges.badge_controller_add:
   path: 'admin/structure/badge/add/{badge_type}'
@@ -118,4 +118,4 @@ user_badges.badge_controller_add:
   requirements:
     _permission: 'administer badge entities'
   options:
-      _admin_route: TRUE
+    _admin_route: TRUE
