@@ -25,15 +25,15 @@ class BadgeController extends ControllerBase {
    *   Return links for badge creation.
    */
   public function addPage() {
-    $build = [
-      '#theme' => 'item_list',
-    ];
+    $build = array(
+      '#theme' => 'item_list'
+    );
 
     $content = array();
 
     // Only use badge types the user has access to.
     foreach ($this->entityManager()->getStorage('badge_type')->loadMultiple() as $type) {
-      $access = $this->entityManager()->getAccessControlHandler('badge')->createAccess($type->id(), NULL, [], TRUE);
+      $access = $this->entityManager()->getAccessControlHandler('badge')->createAccess($type->id(), NULL, array(), TRUE);
       if ($access->isAllowed()) {
         $content[] = \Drupal::l($type->label(), new Url('user_badges.badge_controller_add', array('badge_type' => $type->id())));
       }
