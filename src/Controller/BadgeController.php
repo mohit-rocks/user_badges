@@ -25,10 +25,6 @@ class BadgeController extends ControllerBase {
    *   Return Hello string.
    */
   public function addPage() {
-    /*return [
-      '#type' => 'markup',
-      '#markup' => $this->t('Implement method: addPage')
-    ];*/
     $build = [
       '#theme' => 'item_list',
     ];
