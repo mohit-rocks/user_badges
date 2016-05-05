@@ -22,7 +22,7 @@ class BadgeController extends ControllerBase {
    * Addpage.
    *
    * @return string
-   *   Return Hello string.
+   *   Return links for badge creation.
    */
   public function addPage() {
     $build = [
@@ -31,7 +31,7 @@ class BadgeController extends ControllerBase {
 
     $content = array();
 
-    // Only use node types the user has access to.
+    // Only use badge types the user has access to.
     foreach ($this->entityManager()->getStorage('badge_type')->loadMultiple() as $type) {
       $access = $this->entityManager()->getAccessControlHandler('badge')->createAccess($type->id(), NULL, [], TRUE);
       if ($access->isAllowed()) {
@@ -39,7 +39,7 @@ class BadgeController extends ControllerBase {
       }
     }
 
-    // Bypass the node/add listing if only one content type is available.
+    // Bypass the /admin/structure/badge/add listing if only one content type is available.
     if (count($content) == 1) {
       $type = array_shift($content);
       return $this->redirect('user_badges.badge_controller_add', array('badge_type' => $type->id()));
