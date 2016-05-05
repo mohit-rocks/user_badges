@@ -29,7 +29,7 @@ class BadgeController extends ControllerBase {
       '#theme' => 'item_list'
     ];
 
-    $content = array();
+    $content = [];
 
     // Only use badge types the user has access to.
     foreach ($this->entityManager()->getStorage('badge_type')->loadMultiple() as $type) {
@@ -42,7 +42,7 @@ class BadgeController extends ControllerBase {
     // Bypass the /admin/structure/badge/add listing if only one content type is available.
     if (count($content) == 1) {
       $type = array_shift($content);
-      return $this->redirect('user_badges.badge_controller_add', array('badge_type' => $type->id()));
+      return $this->redirect('user_badges.badge_controller_add', ['badge_type' => $type->id()]);
     }
 
     $build['#items'] = $content;
@@ -56,9 +56,9 @@ class BadgeController extends ControllerBase {
    *   Returns badge creation form.
    */
   public function add(BadgeTypeInterface $badge_type) {
-    $badge = $this->entityManager()->getStorage('badge')->create(array(
+    $badge = $this->entityManager()->getStorage('badge')->create([
       'type' => $badge_type->id(),
-    ));
+    ]);
 
     $form = $this->entityFormBuilder()->getForm($badge);
     return $form;
@@ -74,7 +74,7 @@ class BadgeController extends ControllerBase {
    *   The page title.
    */
   public function addBadgeTitle(BadgeTypeInterface $badge_type) {
-    return $this->t('Create @name', array('@name' => $badge_type->label()));
+    return $this->t('Create @name', ['@name' => $badge_type->label()]);
   }
 
 }
