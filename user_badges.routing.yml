@@ -20,16 +20,6 @@ entity.badge.collection:
   options:
     _admin_route: TRUE
 
-entity.badge.add_form:
-  path: '/admin/structure/badge/add'
-  defaults:
-    _entity_form: badge.add
-    _title: 'Add Badge'
-  requirements:
-    _permission: 'add badge entities'
-  options:
-    _admin_route: TRUE
-
 entity.badge.edit_form:
   path: '/admin/structure/badge/{badge}/edit'
   defaults:
@@ -109,3 +99,19 @@ user_badges.badges:
   requirements:
     _permission: 'access content'
     user: \d+
+
+user_badges.badge_controller_addPage:
+  path: '/admin/structure/badge/add'
+  defaults:
+    _controller: '\Drupal\user_badges\Controller\BadgeController::addPage'
+    _title: 'Add Badge'
+  requirements:
+    _permission: 'administer badge entities'
+
+user_badges.badge_controller_add:
+  path: 'admin/structure/badge/add/{badge_type}'
+  defaults:
+    _controller: '\Drupal\user_badges\Controller\BadgeController::add'
+    _title_callback: '\Drupal\user_badges\Controller\BadgeController::addBadgeTitle'
+  requirements:
+    _permission: 'administer badge entities'
