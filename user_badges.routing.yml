@@ -40,17 +40,6 @@ entity.badge.delete_form:
   options:
     _admin_route: TRUE
 
-
-entity.badge_type.collection:
-  path: 'admin/badge_types/list'
-  defaults:
-    _entity_list: 'badge_type'
-    _title: 'badge_type list'
-  requirements:
-    _permission: 'view badge type entities'
-  options:
-    _admin_route: TRUE
-
 entity.badge_type.add_form:
   path: '/admin/structure/badge_type/add'
   defaults:
@@ -84,10 +73,10 @@ entity.badge_type.delete_form:
 badge.settings:
   path: 'admin/structure/badge'
   defaults:
-   _form: '\Drupal\user_badges\Entity\Form\BadgeSettingsForm'
-   _title: 'Badge settings'
+    _entity_list: 'badge_type'
+    _title: 'Badge settings'
   requirements:
-    _permission: 'administer badge entities'
+    _permission: 'view badge type entities'
   options:
     _admin_route: TRUE
 
