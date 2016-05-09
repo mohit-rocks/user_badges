@@ -9,4 +9,4 @@ entity.badge_type.add_form:
   route_name: 'entity.badge_type.add_form'
   title: 'Add Badge type'
   appears_on:
-    - entity.badge_type.collection
+    - badge.settings

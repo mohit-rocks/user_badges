@@ -11,11 +11,5 @@ badge.admin.structure.settings:
   description: 'Configure Badge entities'
   route_name: badge.settings
   parent: system.admin_structure
-# Badge type menu items definition
-entity.badge_type.collection:
-  title: 'Badge type'
-  route_name: entity.badge_type.collection
-  description: 'List Badge type (bundles)'
-  parent: system.admin_structure
-  weight: 99
+
 
