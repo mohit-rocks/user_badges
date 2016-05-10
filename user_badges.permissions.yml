@@ -13,3 +13,7 @@ edit badge entities:
 
 view badge entities:
   title: 'View Badge entities'
+
+re-order badges:
+  title: 'Rearrange User Badges'
+  description: 'Allow to access badge listing page on "user/{uid}/badges". This page allows to reorder badges.'

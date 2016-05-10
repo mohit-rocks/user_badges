@@ -86,7 +86,7 @@ user_badges.badges:
     _controller: '\Drupal\user_badges\Controller\UserBadgesListBuilder::badgesListing'
     _title: 'User Badges'
   requirements:
-    _permission: 'access content'
+    _custom_access: '\Drupal\user_badges\Controller\BadgeAccessController::access'
     user: \d+
 
 user_badges.badge_controller_addPage:
