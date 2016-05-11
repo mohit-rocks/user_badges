@@ -46,12 +46,18 @@ class BadgeListBuilder extends EntityListBuilder {
         )
       )
     );
-    $row['badge_image'] = array(
-      '#theme' => 'image_style',
-      '#style_name' => 'thumbnail',
-      '#uri' => $entity->image->entity->getFileUri(),
-      '#title' => $entity->label(),
-    );
+    if ($entity->image->entity) {
+      $image = array(
+        '#theme' => 'image_style',
+        '#style_name' => 'thumbnail',
+        '#uri' => $entity->image->entity->getFileUri(),
+        '#title' => $entity->label(),
+      );
+      $row['badge_image'] = drupal_render($image);
+    }
+    else {
+      $row['badge_image'] = $this->t('No Image');
+    }
     $row['weight'] = $entity->getBadgeWeight();
 
     $users_roles = $entity->getBadgeRoleIds();

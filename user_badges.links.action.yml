@@ -1,5 +1,5 @@
-entity.badge.add_form:
-  route_name: entity.badge.add_form
+user_badges.badge_controller_addPage:
+  route_name: 'user_badges.badge_controller_addPage'
   title: 'Add Badge'
   appears_on:
     - entity.badge.collection
